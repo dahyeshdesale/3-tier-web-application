@@ -5,6 +5,7 @@ provider "aws" {
 resource "aws_instance" "public1" { 
   ami = "ami-053b12d3152c0cc71"
   instance_type = "t2.micro"
+  key_name = "ubuntu"
   subnet_id = aws_subnet.public1.id 
   tags = { Name = "PublicInstance1" } 
 }
@@ -18,7 +19,8 @@ resource "aws_instance" "public1" {
 
 resource "aws_instance" "private1" { 
   ami = "ami-053b12d3152c0cc71"  
-  instance_type = "t2.micro" 
+  instance_type = "t2.micro"
+  key_name = "ubuntu"
   subnet_id = aws_subnet.private1.id 
   tags = { Name = "PrivateInstance1" } 
 }
