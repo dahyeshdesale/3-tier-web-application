@@ -150,7 +150,7 @@ resource "aws_security_group" "private_sg" {
 # EC2 Instances
 resource "aws_instance" "public_instance" {
   count = 2
-  ami           = "ami-0c55b159cbfafe1f0"
+  ami           = "ami-053b12d3152c0cc71"
   instance_type = "t2.micro"
   subnet_id     = element(aws_subnet.public_subnet[*].id, count.index)
   security_groups = [aws_security_group.public_sg.name]
@@ -162,7 +162,7 @@ resource "aws_instance" "public_instance" {
 
 resource "aws_instance" "private_instance" {
   count = 2
-  ami           = "ami-0c55b159cbfafe1f0"
+  ami           = "ami-053b12d3152c0cc71"
   instance_type = "t2.micro"
   subnet_id     = element(aws_subnet.private_subnet[*].id, count.index)
   security_groups = [aws_security_group.private_sg.name]
