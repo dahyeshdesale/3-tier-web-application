@@ -44,7 +44,7 @@ resource "aws_internet_gateway" "igw" {
 
 # NAT Gateway
 resource "aws_eip" "nat_eip" {
-  vpc = true
+  domain = true
 }
 
 resource "aws_nat_gateway" "nat_gw" {
@@ -264,7 +264,7 @@ resource "aws_db_instance" "db" {
   engine               = "mysql"
   engine_version       = "5.7"
   instance_class       = "db.t2.micro"
-  name                 = "mydb"
+  identifier           = "mydb"
   username             = "foo"
   password             = "foobarbaz"
   db_subnet_group_name = aws_db_subnet_group.db_subnet_group.name
