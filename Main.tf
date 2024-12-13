@@ -153,7 +153,7 @@ resource "aws_instance" "public_instance" {
   ami           = "ami-053b12d3152c0cc71"
   instance_type = "t2.micro"
   subnet_id     = element(aws_subnet.public_subnet[*].id, count.index)
-  security_groups = [aws_security_group.public_sg.name]
+  vpc_security_group_ids = [aws_security_group.public_sg.id]
 
   tags = {
     Name = "public-instance-${count.index + 1}"
@@ -165,7 +165,7 @@ resource "aws_instance" "private_instance" {
   ami           = "ami-053b12d3152c0cc71"
   instance_type = "t2.micro"
   subnet_id     = element(aws_subnet.private_subnet[*].id, count.index)
-  security_groups = [aws_security_group.private_sg.name]
+  vpc_security_group_ids = [aws_security_group.private_sg.name]
 
   tags = {
     Name = "private-instance-${count.index + 1}"
@@ -178,7 +178,7 @@ resource "aws_lb" "public_lb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.public_sg.id]
-  subnets            = aws_subnet.public_subnet[*].id
+  subnets            = [aws_subnet.public_subnet[0].id, aws_subnet.public_subnet[1].id]
 
   tags = {
     Name = "public-lb"
@@ -190,7 +190,7 @@ resource "aws_lb" "private_lb" {
   internal           = true
   load_balancer_type = "application"
   security_groups    = [aws_security_group.private_sg.id]
-  subnets            = aws_subnet.private_subnet[*].id
+  subnets            = [aws_subnet.private_subnet[1].id, aws_subnet.private_subnet[1].id]
 
   tags = {
     Name = "private-lb"
@@ -198,14 +198,17 @@ resource "aws_lb" "private_lb" {
 }
 
 # Auto Scaling Groups
-resource "aws_launch_configuration" "public_lc" {
+resource "aws_launch_template" "public_lc" {
   name          = "public-lc"
   image_id      = "ami-053b12d3152c0cc71"
   instance_type = "t2.micro"
 }
 
 resource "aws_autoscaling_group" "public_asg" {
-  launch_configuration = aws_launch_configuration.public_lc.id
+  launch_template {
+    id = aws_launch_configuration.public_lc.id
+    version = "$Latest"
+  } 
   min_size             = 1
   max_size             = 2
   vpc_zone_identifier  = aws_subnet.public_subnet[*].id
@@ -224,7 +227,10 @@ resource "aws_launch_configuration" "private_lc" {
 }
 
 resource "aws_autoscaling_group" "private_asg" {
-  launch_configuration = aws_launch_configuration.private_lc.id
+  launch_template {
+    id = aws_launch_configuration.private_lc.id
+    version = "$Latest"
+  } 
   min_size             = 1
   max_size             = 2
   vpc_zone_identifier  = aws_subnet.private_subnet[*].id
@@ -241,7 +247,7 @@ resource "aws_instance" "bastion" {
   ami           = "ami-053b12d3152c0cc71"
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.public_subnet[0].id
-  security_groups = [aws_security_group.public_sg.name]
+  vpc_security_group_ids = [aws_security_group.public_sg.id]
 
   tags = {
     Name = "bastion-host"
