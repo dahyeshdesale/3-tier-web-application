@@ -30,6 +30,11 @@ resource "aws_instance" "private2" {
   tags = { Name = "PrivateInstance2" } 
 }
 
+resource "aws_db_subnet_group" "main" {
+  name = "main-subnet-group"
+  subnet_ids = [aws_subnet.private3.id, aws_subnet.private4.id]
+}
+
 resource "aws_db_instance" "main" { 
   allocated_storage = 20 
   engine = "mysql" 
@@ -41,5 +46,5 @@ resource "aws_db_instance" "main" {
   parameter_group_name = "default.mysql5.7" 
   skip_final_snapshot = true 
   publicly_accessible = false 
-  subnet_id = aws_subnet.private3.id 
+  db_subnet_group_name = aws_db_subnet_group.main.name 
   }
