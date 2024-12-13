@@ -200,7 +200,7 @@ resource "aws_lb" "private_lb" {
 # Auto Scaling Groups
 resource "aws_launch_configuration" "public_lc" {
   name          = "public-lc"
-  image_id      = "ami-0c55b159cbfafe1f0"
+  image_id      = "ami-053b12d3152c0cc71"
   instance_type = "t2.micro"
 }
 
@@ -219,7 +219,7 @@ resource "aws_autoscaling_group" "public_asg" {
 
 resource "aws_launch_configuration" "private_lc" {
   name          = "private-lc"
-  image_id      = "ami-0c55b159cbfafe1f0"
+  image_id      = "ami-053b12d3152c0cc71"
   instance_type = "t2.micro"
 }
 
@@ -238,7 +238,7 @@ resource "aws_autoscaling_group" "private_asg" {
 
 # Bastion Host
 resource "aws_instance" "bastion" {
-  ami           = "ami-0c55b159cbfafe1f0"
+  ami           = "ami-053b12d3152c0cc71"
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.public_subnet[0].id
   security_groups = [aws_security_group.public_sg.name]
