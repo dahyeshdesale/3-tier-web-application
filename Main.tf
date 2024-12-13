@@ -154,6 +154,7 @@ resource "aws_instance" "public_instance" {
   instance_type = "t2.micro"
   subnet_id     = element(aws_subnet.public_subnet[*].id, count.index)
   vpc_security_group_ids = [aws_security_group.public_sg.id]
+  availability_zone = "ap-south-1a"
 
   tags = {
     Name = "public-instance-${count.index + 1}"
@@ -166,6 +167,7 @@ resource "aws_instance" "private_instance" {
   instance_type = "t2.micro"
   subnet_id     = element(aws_subnet.private_subnet[*].id, count.index)
   vpc_security_group_ids = [aws_security_group.private_sg.name]
+  availability_zone = "ap-south-1b"
 
   tags = {
     Name = "private-instance-${count.index + 1}"
