@@ -9,12 +9,12 @@ resource "aws_instance" "public1" {
   tags = { Name = "PublicInstance1" } 
 }
 
-resource "aws_instance" "public2" { 
-  ami = "ami-053b12d3152c0cc71"
-  instance_type = "t2.medium" 
-  subnet_id = aws_subnet.public2.id 
-  tags = { Name = "PublicInstance2" } 
-}
+# resource "aws_instance" "public2" { 
+#   ami = "ami-053b12d3152c0cc71"
+#   instance_type = "t2.medium" 
+#   subnet_id = aws_subnet.public2.id 
+#   tags = { Name = "PublicInstance2" } 
+# }
 
 resource "aws_instance" "private1" { 
   ami = "ami-053b12d3152c0cc71"  
@@ -23,12 +23,12 @@ resource "aws_instance" "private1" {
   tags = { Name = "PrivateInstance1" } 
 }
 
-resource "aws_instance" "private2" { 
-  ami = "ami-053b12d3152c0cc71"  
-  instance_type = "t2.medium" 
-  subnet_id = aws_subnet.private2.id 
-  tags = { Name = "PrivateInstance2" } 
-}
+# resource "aws_instance" "private2" { 
+#   ami = "ami-053b12d3152c0cc71"  
+#   instance_type = "t2.medium" 
+#   subnet_id = aws_subnet.private2.id 
+#   tags = { Name = "PrivateInstance2" } 
+# }
 
 resource "aws_db_subnet_group" "main" {
   name = "main-subnet-group"
