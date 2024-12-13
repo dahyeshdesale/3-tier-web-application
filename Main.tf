@@ -206,7 +206,7 @@ resource "aws_launch_template" "public_lc" {
 
 resource "aws_autoscaling_group" "public_asg" {
   launch_template {
-    id = aws_launch_configuration.public_lc.id
+    id = aws_launch_template.public_lc.id
     version = "$Latest"
   } 
   min_size             = 1
@@ -220,7 +220,7 @@ resource "aws_autoscaling_group" "public_asg" {
   }
 }
 
-resource "aws_launch_configuration" "private_lc" {
+resource "aws_launch_template" "private_lc" {
   name          = "private-lc"
   image_id      = "ami-053b12d3152c0cc71"
   instance_type = "t2.micro"
@@ -228,7 +228,7 @@ resource "aws_launch_configuration" "private_lc" {
 
 resource "aws_autoscaling_group" "private_asg" {
   launch_template {
-    id = aws_launch_configuration.private_lc.id
+    id = aws_launch_template.private_lc.id
     version = "$Latest"
   } 
   min_size             = 1
