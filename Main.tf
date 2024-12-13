@@ -17,13 +17,13 @@ resource "aws_instance" "public1" {
 #   tags = { Name = "PublicInstance2" } 
 # }
 
-resource "aws_instance" "private1" { 
-  ami = "ami-053b12d3152c0cc71"  
-  instance_type = "t2.micro"
-  key_name = "ubuntu"
-  subnet_id = aws_subnet.private1.id 
-  tags = { Name = "PrivateInstance1" } 
-}
+# resource "aws_instance" "private1" { 
+#   ami = "ami-053b12d3152c0cc71"  
+#   instance_type = "t2.micro"
+#   key_name = "ubuntu"
+#   subnet_id = aws_subnet.private1.id 
+#   tags = { Name = "PrivateInstance1" } 
+# }
 
 # resource "aws_instance" "private2" { 
 #   ami = "ami-053b12d3152c0cc71"  
